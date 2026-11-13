@@ -1,0 +1,129 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Angel Class devotee profile and authentication record",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 200 },
+        "phoneNumber": { "type": "string", "maxLength": 30 },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "lastLoginAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["uid", "name", "role", "status"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized administrative accounts with full privileges",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "maxLength": 200 },
+        "grantedAt": { "type": "string", "maxLength": 50 },
+        "grantedBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["uid", "email"]
+    },
+    "CurriculumSection": {
+      "title": "CurriculumSection",
+      "description": "Canonical spiritual curriculum module",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 500 },
+        "icon": { "type": "string", "maxLength": 64 },
+        "protected": { "type": "boolean" },
+        "order": { "type": "number" },
+        "visible": { "type": "boolean" },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "title", "order"]
+    },
+    "CurriculumItem": {
+      "title": "CurriculumItem",
+      "description": "Individual resource item or uploaded file within a curriculum folder",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "sectionId": { "type": "string", "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "maxLength": 250 },
+        "name": { "type": "string", "maxLength": 250 },
+        "content": { "type": "string", "maxLength": 50000 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "url": { "type": "string", "maxLength": 2000 },
+        "downloadUrl": { "type": "string", "maxLength": 2000 },
+        "firebaseUrl": { "type": "string", "maxLength": 2000 },
+        "localUrl": { "type": "string", "maxLength": 1000 },
+        "storagePath": { "type": "string", "maxLength": 500 },
+        "thumbnail": { "type": "string", "maxLength": 2000 },
+        "mimeType": { "type": "string", "maxLength": 150 },
+        "type": { "type": "string", "maxLength": 150 },
+        "size": { "type": "number" },
+        "duration": { "type": "string", "maxLength": 50 },
+        "audioUrl": { "type": "string", "maxLength": 2000 },
+        "uploadedBy": { "type": "string", "maxLength": 200 },
+        "uploadedByName": { "type": "string", "maxLength": 150 },
+        "authorId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["approved", "pending_approval", "rejected"] },
+        "date": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "sectionId", "title", "url", "authorId", "status", "createdAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable administrative audit log of sensitive actions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "action": { "type": "string", "maxLength": 100 },
+        "actor": { "type": "string", "maxLength": 200 },
+        "details": { "type": "string", "maxLength": 2000 },
+        "timestamp": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "action", "actor", "timestamp"]
+    },
+    "ConnectionTest": {
+      "title": "ConnectionTest",
+      "description": "Live Firestore connectivity ping document",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "maxLength": 50 },
+        "checkedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile collection with owner-only access"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Authorized administrators registry for role verification"
+    },
+    "/curriculum/{sectionId}": {
+      "schema": { "$ref": "#/entities/CurriculumSection" },
+      "description": "The ten canonical curriculum pillars"
+    },
+    "/curriculum/{sectionId}/items/{itemId}": {
+      "schema": { "$ref": "#/entities/CurriculumItem" },
+      "description": "Resources, hymns, videos, and study guides for each module"
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Immutable administrative security audit trail"
+    },
+    "/test/connection": {
+      "schema": { "$ref": "#/entities/ConnectionTest" },
+      "description": "Firestore availability test document"
+    }
+  }
+}

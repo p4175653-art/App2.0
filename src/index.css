@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Cinzel', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: #FDFBF7;
+    color: #1F2923;
+    -webkit-tap-highlight-color: transparent;
+    user-select: auto;
+  }
+
+  h1, h2, h3, h4, .font-serif-spiritual {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Strict Content Protection rules (FLAG_SECURE simulation & protection) */
+@media print {
+  body {
+    display: none !important;
+  }
+}
+
+.protected-secure-zone {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.watermark-overlay {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(212, 175, 55, 0.04),
+    rgba(212, 175, 55, 0.04) 20px,
+    transparent 20px,
+    transparent 40px
+  );
+}
+
+/* Custom scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 56, 42, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.6);
+}

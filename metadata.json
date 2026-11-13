@@ -1,0 +1,6 @@
+{
+  "name": "Angel Class",
+  "description": "Premium spiritual education, protected learning materials, interactive presentations, and private Gemini AI assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

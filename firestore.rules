@@ -1,0 +1,147 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- REUSABLE HARDENED GLOBAL HELPERS ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Trusted Admin verification (database document lookup + runtime verified admin email)
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        (request.auth.token.email == 'p4175653@gmail.com' && request.auth.token.email_verified == true) ||
+        (request.auth.token.email == 'admin@angelclass.org' && request.auth.token.email_verified == true)
+      );
+    }
+
+    function isOptStr(data, key, maxLen) {
+      return !(key in data) || (data[key] is string && data[key].size() <= maxLen);
+    }
+
+    function isValidCurriculumItem(data, sectionId, itemId) {
+      return data.keys().hasAll(['id', 'sectionId', 'title', 'url', 'authorId', 'status', 'createdAt'])
+        && data.keys().hasOnly([
+          'id', 'sectionId', 'title', 'name', 'content', 'description',
+          'url', 'downloadUrl', 'firebaseUrl', 'localUrl', 'storagePath',
+          'thumbnail', 'mimeType', 'type', 'size', 'duration', 'audioUrl',
+          'uploadedBy', 'uploadedByName', 'authorId', 'status', 'date',
+          'createdAt', 'updatedAt'
+        ])
+        && data.id == itemId
+        && data.sectionId == sectionId
+        && data.authorId == request.auth.uid
+        && data.title is string && data.title.size() >= 1 && data.title.size() <= 250
+        && data.url is string && data.url.size() >= 1 && data.url.size() <= 2000
+        && data.status is string && data.status in ['approved', 'pending_approval', 'rejected']
+        && data.createdAt is string && data.createdAt.size() <= 50
+        && isOptStr(data, 'name', 250)
+        && isOptStr(data, 'content', 50000)
+        && isOptStr(data, 'description', 2000)
+        && isOptStr(data, 'downloadUrl', 2000)
+        && isOptStr(data, 'firebaseUrl', 2000)
+        && isOptStr(data, 'localUrl', 1000)
+        && isOptStr(data, 'storagePath', 500)
+        && isOptStr(data, 'thumbnail', 2000)
+        && isOptStr(data, 'mimeType', 150)
+        && isOptStr(data, 'type', 150)
+        && isOptStr(data, 'duration', 50)
+        && isOptStr(data, 'audioUrl', 2000)
+        && isOptStr(data, 'uploadedBy', 200)
+        && isOptStr(data, 'uploadedByName', 150)
+        && isOptStr(data, 'date', 50)
+        && isOptStr(data, 'updatedAt', 50)
+        && (!('size' in data) || ((data.size is int || data.size is float) && data.size >= 0));
+    }
+
+    // --- CONNECTIVITY TEST PROBE ---
+    match /test/connection {
+      allow get: if true;
+      allow write: if isAdmin();
+    }
+
+    // --- USERS COLLECTION ---
+    match /users/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      
+      // Prevent Self-Assigned Roles: New user profile cannot set role to admin
+      allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId
+        && incoming().uid == userId
+        && incoming().role == 'user'
+        && incoming().status == 'active'
+        && incoming().name is string && incoming().name.size() <= 120;
+
+      // Users can only update personal name/lastLoginAt; Admin can manage all
+      allow update: if isSignedIn() && isValidId(userId) && (
+        isAdmin() || (
+          request.auth.uid == userId
+          && incoming().uid == existing().uid
+          && incoming().role == existing().role
+          && incoming().status == existing().status
+          && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'lastLoginAt', 'phoneNumber'])
+          && incoming().name is string && incoming().name.size() <= 120
+        )
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    // --- ADMINS REGISTRY ---
+    match /admins/{adminId} {
+      allow get: if isSignedIn() && isValidId(adminId);
+      allow list: if isAdmin();
+      allow write: if isAdmin() && isValidId(adminId);
+    }
+
+    // --- CURRICULUM SECTIONS ---
+    match /curriculum/{sectionId} {
+      allow get: if isSignedIn() && isValidId(sectionId);
+      allow list: if isSignedIn();
+      allow write: if isAdmin() && isValidId(sectionId);
+
+      // Section child items (uploaded files, videos, songs, SOPs, study guides)
+      match /items/{itemId} {
+        allow get: if isSignedIn() && isValidId(sectionId) && isValidId(itemId);
+        allow list: if isSignedIn() && (resource.data.status == 'approved' || isAdmin());
+        allow create: if isSignedIn()
+          && isValidId(sectionId)
+          && isValidId(itemId)
+          && isValidCurriculumItem(incoming(), sectionId, itemId)
+          && (isAdmin() || incoming().status == 'approved');
+        allow update: if isAdmin() && isValidId(sectionId) && isValidId(itemId) && isValidCurriculumItem(incoming(), sectionId, itemId);
+        allow delete: if isAdmin() && isValidId(sectionId) && isValidId(itemId);
+      }
+    }
+
+    // --- IMMUTABLE AUDIT LOGS ---
+    match /auditLogs/{logId} {
+      allow get, list: if isAdmin();
+      allow create: if isAdmin() && isValidId(logId)
+        && incoming().id == logId
+        && incoming().action is string && incoming().action.size() <= 100
+        && incoming().actor is string && incoming().actor.size() <= 200
+        && incoming().timestamp is string;
+      allow update, delete: if false; // Strict immutability
+    }
+  }
+}

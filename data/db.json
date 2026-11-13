@@ -1,0 +1,206 @@
+{
+  "settings": {
+    "theme": "emerald-gold",
+    "appName": "Angel Class",
+    "subtitle": "Spiritual Education & Sacred Fellowship",
+    "primaryColor": "#0F382A",
+    "secondaryColor": "#164E3D",
+    "accentColor": "#D4AF37",
+    "backgroundColor": "#FDFBF7",
+    "fontHeading": "Cinzel, Georgia, serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "cardStyle": "rounded-xl border border-emerald-900/10 shadow-sm bg-white/95 backdrop-blur-sm",
+    "animationsEnabled": true,
+    "animationSpeed": "normal",
+    "logoUrl": "/logo.svg",
+    "versions": [
+      {
+        "id": "v1.0.0",
+        "name": "Classical Sacred Emerald & Gold",
+        "timestamp": "2026-01-01T00:00:00.000Z",
+        "theme": "emerald-gold",
+        "primaryColor": "#0F382A",
+        "accentColor": "#D4AF37"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "videos",
+      "title": "Videos",
+      "icon": "Video",
+      "description": "Spiritual lectures, guided visual meditations, and sacred discourses",
+      "order": 1,
+      "visible": true
+    },
+    {
+      "id": "activity",
+      "title": "Activity",
+      "icon": "Compass",
+      "description": "Fellowship initiatives, outreach projects, and group devotional exercises",
+      "order": 2,
+      "visible": true
+    },
+    {
+      "id": "sop",
+      "title": "SOP",
+      "icon": "ScrollText",
+      "description": "Standard Operating Procedures, sanctuary protocols, and service rules",
+      "order": 3,
+      "visible": true
+    },
+    {
+      "id": "schedules",
+      "title": "Yearly Schedules",
+      "icon": "CalendarDays",
+      "description": "Annual liturgy, seasonal ascensions, retreats, and holy calendar",
+      "order": 4,
+      "visible": true
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "icon": "Sparkles",
+      "description": "Scripture quizzes, celestial harmony puzzles, and uplifting fellowship challenges",
+      "order": 5,
+      "visible": true
+    },
+    {
+      "id": "ppt",
+      "title": "PPT Presentation",
+      "icon": "Presentation",
+      "description": "Interactive presentation slides with protected digital view",
+      "order": 6,
+      "visible": true,
+      "protected": true
+    },
+    {
+      "id": "music",
+      "title": "Music",
+      "icon": "Music",
+      "description": "Sacred hymns, meditative ambient compositions, and devotional chants",
+      "order": 7,
+      "visible": true
+    },
+    {
+      "id": "photos",
+      "title": "Photos",
+      "icon": "Images",
+      "description": "Sacred sanctuary archives, community ceremonies, and retreat moments",
+      "order": 8,
+      "visible": true
+    },
+    {
+      "id": "learning",
+      "title": "Learning Materials",
+      "icon": "BookOpenCheck",
+      "description": "Strictly protected spiritual doctrine, manuscripts, and commentaries",
+      "order": 9,
+      "visible": true,
+      "protected": true
+    },
+    {
+      "id": "add-more",
+      "title": "Add More",
+      "icon": "PlusCircle",
+      "description": "Custom administrator-published expansion modules",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "video-links",
+      "title": "Video Links",
+      "icon": "Link",
+      "description": "YouTube & direct video URLs played directly inside the app",
+      "order": 11,
+      "visible": true
+    }
+  ],
+  "users": [
+    {
+      "id": "admin-001",
+      "name": "Angel Class Administrator",
+      "email": "admin@angelclass.org",
+      "password": "ec013111967b4a1f3f4822a0340b2e4d:ab43e320c5a4e8810e825e0625a7e2655bd7a8a3015c7be2e59edfe1f470bd9d597b4b3f127bc577dceab4781b3bccc85c491ad105e0e13de3778f7cef72af7d",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "lastLogin": "2026-11-13T08:30:07.586Z",
+      "sessionRevokedAt": null
+    },
+    {
+      "id": "admin-master-p4175653",
+      "name": "Master Administrator",
+      "email": "p4175653@gmail.com",
+      "password": "ec013111967b4a1f3f4822a0340b2e4d:ab43e320c5a4e8810e825e0625a7e2655bd7a8a3015c7be2e59edfe1f470bd9d597b4b3f127bc577dceab4781b3bccc85c491ad105e0e13de3778f7cef72af7d",
+      "role": "admin",
+      "status": "active",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "lastLogin": null,
+      "sessionRevokedAt": null
+    },
+    {
+      "id": "user-001",
+      "name": "Grace Student",
+      "email": "student@angelclass.org",
+      "password": "4e4b2cd1166f917108000f7394b91c01:81c41c320dd4713e941a6e21542809da9e07221479c3558f79e5114e77494756968557096d4d85ebc2a78507417e2ceb24a5b002e0c2560fe786268fe6835c97",
+      "role": "user",
+      "status": "active",
+      "createdAt": "2026-02-15T10:00:00.000Z",
+      "lastLogin": "2026-11-13T08:29:47.667Z",
+      "sessionRevokedAt": null
+    },
+    {
+      "id": "rREdlzUnCQfP5y8ECohmHnHo4Pc2",
+      "name": "Velu A",
+      "email": "velua876@gmail.com",
+      "emailVerified": true,
+      "password": "999530da4755fcd2bccf8529fe07f879:8f3cad142d5a79b114fe26606057199138e21b112e20d26495450227614f01ed34e46a493b8b88875db09d363128849210a6a9b0d86b7411bd6cd873b988c134",
+      "role": "user",
+      "status": "active",
+      "createdAt": "2026-11-13T04:56:54.165Z",
+      "lastLogin": "2026-11-13T04:56:54.165Z",
+      "sessionRevokedAt": null
+    }
+  ],
+  "auditLogs": [],
+  "content": {
+    "videos": [],
+    "activity": [],
+    "sop": [],
+    "schedules": [],
+    "games": [],
+    "ppt": [],
+    "music": [],
+    "photos": [],
+    "learning": [],
+    "add-more": [],
+    "custom": [],
+    "video-links": []
+  },
+  "aiMemories": {
+    "rREdlzUnCQfP5y8ECohmHnHo4Pc2": []
+  },
+  "aiConversations": {
+    "rREdlzUnCQfP5y8ECohmHnHo4Pc2": [
+      {
+        "id": "thread-1794558186927",
+        "title": "How can I stay calm and focused ...",
+        "createdAt": "2026-11-13T08:23:06.927Z",
+        "updatedAt": "2026-11-13T08:23:12.967Z",
+        "messages": [
+          {
+            "role": "user",
+            "content": "How can I stay calm and focused when solving difficult problems?",
+            "timestamp": "2026-11-13T08:23:06.927Z"
+          },
+          {
+            "role": "assistant",
+            "content": "It is completely normal to feel your heart beat a little faster when you hit a roadblock, whether it’s a tricky math word problem, a tough science question, or even a difficult level in a game! Your brain is just working extra hard. \n\nHere are a few super-secret \"superhero tools\" you can use to stay calm and focused when things get tough:\n\n**1. Take the \"Reset\" Breath**\nWhen we get stressed, our brains actually get less oxygen because we take shallow breaths. When you feel stuck, stop, close your eyes, and take one deep breath in through your nose (like you're smelling a delicious pizza), and slowly let it out through your mouth (like you're cooling down hot soup). Do this three times. It instantly tells your nervous system, *\"Hey, we are safe, we've got this.\"*\n\n**2. Be a Detective, Not a Worrier**\nInstead of thinking, *\"I'm terrible at this,\"* change your inner voice to sound like a curious detective. Say, *\"Hmm, what is this problem actually asking me to find?\"* or *\"What do I already know that can help me solve this mystery?\"* Curiosity replaces panic!\n\n**3. Break It Into Bite-Sized Pieces**\nA giant problem looks scary, like a mountain you have to climb all at once. But mountains are climbed one small step at a time. Ask yourself: *\"What is the very first tiny piece I need to do?\"* Once you do that first piece, look for the second. Before you know it, you're at the top!\n\n**4. Talk to Yourself Out Loud**\nSaying your thoughts out loud (even in a whisper) forces your brain to slow down and organize your ideas. Try saying, *\"Okay, first I need to figure out X, and then I need to use that to solve Y...\"* It’s amazing how much clearer things become when you hear your own voice guiding you through it.\n\n**5. Give Yourself Permission to Pause**\nIf your brain feels like it's fried, take a two-minute \"brain break.\" Stand up, stretch your arms up high like a giant oak tree, wiggle your fingers, get a sip of water, and look away from your work. When you come back, your brain will have reset, and the answer might suddenly pop right into your head!\n\nRemember, struggling with a hard problem doesn't mean you aren't smart—it actually means your brain is **growing**. Every time you push through a tough spot, your brain gets stronger, just like lifting weights makes your muscles stronger. \n\nWhat kind of difficult problem are you working on right now? We can tackle it together, step-by-step!",
+            "timestamp": "2026-11-13T08:23:12.967Z"
+          }
+        ]
+      }
+    ]
+  }
+}
